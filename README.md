@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# File System App Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React (Vite + TypeScript) UI for browsing a name-only folder/file tree: create folders and files, delete, and search files by name prefix (top 10 typeahead) in the current folder or across all files.
 
-Currently, two official plugins are available:
+The full app (Postgres, API, this UI, HTTPS) lives in the parent repo: [file-system-app](https://github.com/231jk0/file-system-app). Use that README to clone with submodules and run everything.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 22+ and npm — for `npm run dev` / `npm run build` on this package.
+- Docker — only if you use the parent repo’s Compose stack (this directory has a `Dockerfile`; it is built from the parent `docker-compose.yml`).
+- Docker Compose v2 (`docker compose`) — same; not used from this directory alone.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Local development
 
-- Configure the top-level `parserOptions` property like this:
+The API must already be running (parent repo: `npm run dev:server`, default `http://localhost:3000`).
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+cp .env.example .env
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+`.env`:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+VITE_SERVER_URL=http://localhost:3000/api/v1
+```
+
+Open [http://localhost:5173](http://localhost:5173). Vite serves the UI; requests go to `VITE_SERVER_URL`.
+
+From the parent repo: `npm run dev:client` (same command).
+
+## Production-style build
+
+```bash
+npm run build
+```
+
+`VITE_SERVER_URL` is baked in at build time. The parent Compose stack passes `/api/v1` (same origin, Traefik routes `/api` to the server).
+
+## Docker
+
+This directory’s `Dockerfile` builds the Vite app and serves it with nginx. Env is not copied into the image; pass `VITE_SERVER_URL` as a build arg. Prefer the parent `docker-compose.yml` rather than running this image by itself (the UI needs the API).
