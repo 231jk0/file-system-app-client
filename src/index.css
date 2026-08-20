@@ -1,0 +1,250 @@
+:root {
+	/* ---------------------------------------------------------------------- */
+	/* Layout                                                                 */
+	/* ---------------------------------------------------------------------- */
+
+	--app-height: calc(var(--vh, 1vh) * 100);
+	--app-max-width: 1360px;
+	--app-bar-height: 56px;
+	--drawer-width: 145px;
+
+	/* ---------------------------------------------------------------------- */
+	/* Shadows                                                                 */
+	/* ---------------------------------------------------------------------- */
+
+	--paper-shadow:
+		0 3px 1px -2px rgb(0 0 0 / 20%),
+		0 2px 2px 0 rgb(0 0 0 / 14%),
+		0 1px 5px 0 rgb(0 0 0 / 12%);
+
+	/* ---------------------------------------------------------------------- */
+	/* Rendering                                                               */
+	/* ---------------------------------------------------------------------- */
+
+	color-scheme: light dark;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================================================== */
+/* Viewport                                                                   */
+/* ========================================================================== */
+
+html,
+body,
+.MuiDialog-container {
+	width: 100%;
+	height: var(--app-height);
+	max-height: var(--app-height);
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	overflow-x: hidden;
+
+	background-repeat: repeat;
+	background-position: top left;
+	background-size: auto;
+}
+
+body.dark {
+	background-color: #000;
+}
+
+/* ========================================================================== */
+/* App                                                                        */
+/* ========================================================================== */
+
+#root {
+	position: absolute;
+	top: var(--app-bar-height);
+
+	width: 100%;
+	max-width: var(--app-max-width);
+	max-height: calc(var(--app-height) - var(--app-bar-height));
+
+	margin-left: calc(100vw - 100%);
+	overflow-x: hidden;
+
+	box-shadow: var(--paper-shadow);
+}
+
+.app-container {
+	max-height: var(--app-height) !important;
+	box-shadow: none !important;
+}
+
+/* ========================================================================== */
+/* App Bar                                                                    */
+/* ========================================================================== */
+
+.app-bar {
+	position: relative;
+	z-index: 1300 !important;
+
+	width: 100%;
+	max-width: var(--app-max-width);
+	height: var(--app-bar-height);
+
+	margin-left: max(
+		0px,
+		calc(50vw - (var(--app-max-width) / 2))
+	);
+}
+
+.app-bar .MuiToolbar-root {
+	min-height: var(--app-bar-height) !important;
+	max-height: var(--app-bar-height) !important;
+}
+
+.MuiToolbar-root {
+	min-height: var(--app-bar-height) !important;
+}
+
+.MuiAppBar-root .MuiButton-root {
+	min-width: 48px !important;
+	max-height: 36px !important;
+	padding-inline: 4px;
+}
+
+/* ========================================================================== */
+/* Persistent Drawer                                                          */
+/* ========================================================================== */
+
+body.persistent-drawer {
+	margin-left: var(--drawer-width) !important;
+}
+
+body.persistent-drawer .app-bar {
+	margin-left: max(
+		0px,
+		calc(
+			50vw -
+			(var(--app-max-width) / 2) +
+			var(--drawer-width)
+		)
+	);
+}
+
+body.persistent-drawer .Toastify__toast-container {
+	margin-left: calc(4px + var(--drawer-width)) !important;
+}
+
+/* ========================================================================== */
+/* Inputs                                                                     */
+/* ========================================================================== */
+
+/*
+ * Hide the caret globally and restore it for editable fields.
+ */
+* {
+	caret-color: transparent;
+}
+
+input,
+textarea {
+	caret-color: auto;
+}
+
+/* Remove number input spinners. */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	margin: 0;
+	-webkit-appearance: none;
+}
+
+input[type='number'] {
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+/* ========================================================================== */
+/* Typography                                                                 */
+/* ========================================================================== */
+
+.MuiTypography-root {
+	font-size: 1.175rem !important;
+}
+
+/* ========================================================================== */
+/* Color Selection                                                            */
+/* ========================================================================== */
+
+.select-color-button .MuiTouchRipple-child {
+	background-color: #fff !important;
+}
+
+.select-color-button .MuiTouchRipple-rippleVisible {
+	opacity: 0.8 !important;
+}
+
+/* ========================================================================== */
+/* Toastify                                                                   */
+/* ========================================================================== */
+
+.Toastify__toast-container {
+	gap: 2px !important;
+}
+
+.Toastify__toast {
+	min-height: 100% !important;
+	margin: auto !important;
+	padding: 0 !important;
+	overflow: hidden;
+
+	background: transparent !important;
+	box-shadow:
+		0 4px 12px rgb(0 0 0 / 15%),
+		0 2px 4px rgb(0 0 0 / 10%) !important;
+}
+
+.Toastify__toast-body {
+	display: flex;
+	align-items: stretch !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.Toastify__toast--draggable {
+	cursor: grab;
+}
+
+.Toastify__toast--dragging {
+	cursor: grabbing;
+}
+
+/* ========================================================================== */
+/* Responsive                                                                 */
+/* ========================================================================== */
+
+@media (max-width: 1360px) {
+	#root {
+		margin-left: 0;
+		box-shadow: none !important;
+	}
+}
+
+@media (max-width: 1650px) {
+	.Toastify__toast {
+		margin: auto !important;
+	}
+}
+
+.Toastify__toast--default.custom-notification {
+	border-radius: 4px !important;
+}
+
+/* ========================================================================== */
+/* Touch Devices                                                              */
+/* ========================================================================== */
+
+.touch-device .Toastify__toast-container {
+	width: calc(100% - 8px) !important;
+	margin-right: 4px !important;
+	margin-bottom: 4px !important;
+	margin-left: 4px !important;
+}
