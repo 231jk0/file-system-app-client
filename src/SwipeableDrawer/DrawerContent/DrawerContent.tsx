@@ -6,7 +6,9 @@ import DrawerHeader from './DrawerHeader';
 import NavigationItems from './NavigationItems/NavigationItems';
 
 import { zustandState } from '@/src/state/state';
-const MOCK_GITHUB_URL = 'https://github.com/example/file-system-app';
+
+const GITHUB_URL = 'https://github.com/231jk0/file-system-app';
+
 const ApplicationSwipeableDrawer = () => {
 	return (
 		<Box
@@ -24,7 +26,7 @@ const ApplicationSwipeableDrawer = () => {
 			<Box sx={{ mt: 'auto' }}>
 				<Divider />
 				<Link
-					href={MOCK_GITHUB_URL}
+					href={GITHUB_URL}
 					rel="noopener noreferrer"
 					sx={{
 						display: 'flex',
